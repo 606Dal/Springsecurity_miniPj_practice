@@ -6,18 +6,23 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 
 import com.security.service.AuthenticationProviderService;
 
 @Configuration
+@EnableWebSecurity // 이게 뭔지 나중에
 public class ProjectConfig {
 	
-	@Autowired
-	private AuthenticationProviderService authenticationProvider;
+	//@Autowired
+	//private AuthenticationProviderService authenticationProvider;
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -30,15 +35,18 @@ public class ProjectConfig {
 		return new SCryptPasswordEncoder(65536, 8, 1, 32, 64);
 	}
 	
-	// 나중에 되는지 확인 필요
+	// 나중에 되는지 확인 필요 // 확인
 	@Bean
-	public AuthenticationManager authenticationManager() throws Exception {
-		return new ProviderManager(authenticationProvider);
+	public AuthenticationManager authenticationManager(
+			AuthenticationConfiguration authenticationConfiguration) throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
 	}
 	
-	// Bean 등록?
+	@Bean
 	protected SecurityFilterChain securityFilterChain(HttpSecurity http) 
 			throws Exception {
+		//HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+		//requestCache.setMatchingRequestParameterName(null);
 		
 		http.formLogin((form) -> form
 				.defaultSuccessUrl("/main", true));

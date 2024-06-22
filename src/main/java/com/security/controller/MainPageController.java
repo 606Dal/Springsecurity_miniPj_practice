@@ -18,7 +18,7 @@ public class MainPageController {
 	public String main(Authentication a, Model model) {
 		model.addAttribute("username", a.getName());
 		model.addAttribute("products", productService.findAll());
-		return "main.html";
+		return "main";
 	}
 
 }

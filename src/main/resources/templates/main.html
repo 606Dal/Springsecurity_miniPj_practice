@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Products</title>
+	</head>
+	<body>
+		<h2 th:text="'안녕하세요(Hello), ' + ${username} + '!'" />
+		<P><a href="/logout">로그아웃(Sing out here)</a></P>
+		
+		<h2>모든 제품입니다(These are all the products):</h2>
+		<table>
+			<thead>
+				<tr>
+					<td> 이름(Name) </td>
+					<td> 가격(Price) </td>
+				</tr>
+			</thead>
+			<tbody>
+				<!--/* 모델의 목록에 제품이 없으면 이 메시지 표시 */-->
+				<tr th:if="${products.empty}">
+					<td colspan="2"> 제품이 없습니다(No Products Available). </td>
+				</tr>
+				<tr th:each="book : ${products}">
+					<td><span th:text="${book.name}"> Name </span></td>
+					<td><span th:text="${book.price}"> Price </span></td>
+				</tr>
+			</tbody>
+		</table>
+	
+	</body>
+</html>

@@ -9,9 +9,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.security.CustomUserDetails;
 
+@Service
 public class AuthenticationProviderService implements AuthenticationProvider{
 
 	// 필요한 종속성인 UserDetailsService + PasswordEncoder 구현 주입
